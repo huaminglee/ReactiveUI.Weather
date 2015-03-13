@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using ReactiveUI;
 
 namespace BetterWeather.Data.ViewModels
@@ -19,6 +21,8 @@ namespace BetterWeather.Data.ViewModels
             set { this.RaiseAndSetIfChanged(ref this.cityName, value); }
 	    }
 
+	    private int count = 0;
+
 		public ListViewModel ()
 		{
 		    this.CityNames = new ReactiveList<ListItemViewModel>();
@@ -28,11 +32,17 @@ namespace BetterWeather.Data.ViewModels
 		        .Subscribe(name =>
 		        {
 		            this.CityNames.Add(new ListItemViewModel(name));
-		            this.CityNames.Add(new ListItemViewModel(name + "2"));
-		            this.CityNames.Add(new ListItemViewModel(name + "3"));
-		            this.CityNames.Add(new ListItemViewModel(name + "4"));
-                    this.CityNames.Add(new ListItemViewModel(name + "5"));
+		            this.CityNames.Add(new ListItemViewModel(name + count++));
+                    this.CityNames.Add(new ListItemViewModel(name + count++));
+                    this.CityNames.Add(new ListItemViewModel(name + count++));
+                    this.CityNames.Add(new ListItemViewModel(name + count++));
 		        });
+
+            // this doesn't work... for whatever reason
+/*		    var timer = Observable.Interval(TimeSpan.FromSeconds(2));
+		    timer
+                .Subscribe(x => this.CityNames.Add(new ListItemViewModel(x + " " + this.CityName + count++)),
+                x => this.CityNames.Add(new ListItemViewModel("ENDDDEEE")));*/
 		}
 	}
 }
