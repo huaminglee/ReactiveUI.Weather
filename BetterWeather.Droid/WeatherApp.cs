@@ -40,7 +40,8 @@ namespace BetterWeather.Droid
 			Locator.CurrentMutable.Register(() => new AndroidLogger(), typeof (ILogger));
 			Locator.CurrentMutable.Register(() => new AndroidLocationService(), typeof(ILocationService));
 
-			Locator.CurrentMutable.RegisterLazySingleton (() => new MainViewModel(), typeof(MainViewModel));
+            Locator.CurrentMutable.RegisterLazySingleton(() => new MainViewModel(), typeof(MainViewModel));
+            Locator.CurrentMutable.RegisterLazySingleton(() => new ListViewModel(), typeof(ListViewModel));
         }
     }
 }

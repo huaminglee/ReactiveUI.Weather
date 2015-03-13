@@ -5,10 +5,11 @@
     android:layout_height="fill_parent"
     android:minWidth="25px"
     android:minHeight="25px">
-    <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
+    <TextView
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/cityNamesListView" />
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:id="@+id/cityName" />
 </LinearLayout>
