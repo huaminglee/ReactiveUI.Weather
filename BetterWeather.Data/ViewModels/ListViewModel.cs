@@ -38,11 +38,11 @@ namespace BetterWeather.Data.ViewModels
                     this.CityNames.Add(new ListItemViewModel(name + count++));
 		        });
 
-            // this doesn't work... for whatever reason
-/*		    var timer = Observable.Interval(TimeSpan.FromSeconds(2));
+            // We have to use the MainThreadScheduler for this!
+		    var timer = Observable.Interval(TimeSpan.FromSeconds(2), RxApp.MainThreadScheduler);
 		    timer
                 .Subscribe(x => this.CityNames.Add(new ListItemViewModel(x + " " + this.CityName + count++)),
-                x => this.CityNames.Add(new ListItemViewModel("ENDDDEEE")));*/
+                x => this.CityNames.Add(new ListItemViewModel("Finished Interval")));
 		}
 	}
 }
