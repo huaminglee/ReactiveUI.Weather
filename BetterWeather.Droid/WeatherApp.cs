@@ -8,6 +8,7 @@ using BetterWeather.Droid.Views;
 using ReactiveUI;
 using Splat;
 using Weather.Droid.Infrastructure;
+using BetterWeather.Data.ViewModels;
 
 namespace BetterWeather.Droid
 {
@@ -34,10 +35,12 @@ namespace BetterWeather.Droid
 
         private void InitializeDependencies()
         {
-            Locator.CurrentMutable.RegisterConstant(new BitmapToImageViewConverter(), typeof(IBindingTypeConverter));
+			Locator.CurrentMutable.RegisterConstant(new BitmapToImageViewConverter(), typeof(IBindingTypeConverter));
 
-            Locator.CurrentMutable.Register(() => new AndroidLogger(), typeof (ILogger));
-            Locator.CurrentMutable.Register(() => new AndroidLocationService(), typeof(ILocationService));
+			Locator.CurrentMutable.Register(() => new AndroidLogger(), typeof (ILogger));
+			Locator.CurrentMutable.Register(() => new AndroidLocationService(), typeof(ILocationService));
+
+			Locator.CurrentMutable.RegisterLazySingleton (() => new MainViewModel(), typeof(MainViewModel));
         }
     }
 }

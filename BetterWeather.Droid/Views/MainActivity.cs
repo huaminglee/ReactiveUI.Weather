@@ -9,6 +9,7 @@ using AndroidHUD;
 using BetterWeather.Data.ViewModels;
 using ReactiveUI;
 using Splat;
+using Android.Content;
 
 namespace BetterWeather.Droid.Views
 {
@@ -29,10 +30,8 @@ namespace BetterWeather.Droid.Views
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            ActionBar.Hide();
-
             // Init VM
-            this.ViewModel = new MainViewModel();
+			this.ViewModel = Locator.Current.GetService (typeof(MainViewModel)) as MainViewModel;
 
             // Get our button from the layout resource,
             this.refreshButton = FindViewById<Button>(Resource.Id.refreshButton);
@@ -53,8 +52,18 @@ namespace BetterWeather.Droid.Views
                     if (image == null)
                         return;
 
-                    WeatherImageView.SetImageDrawable(image.ToNative());
+					WeatherImageView.SetImageDrawable(image.ToNative ());
                 });
+
+			Observable.FromEventPattern (
+				ev => this.WeatherImageView.Click += ev,
+				ev => this.WeatherImageView.Click -= ev)
+				.Subscribe (_ => 
+					{
+						Intent intent = new Intent(this, typeof(ListActivity));
+						intent.PutExtra ("cityName", this.ViewModel.CityName);
+						StartActivity (intent);
+					});
 
             this.WhenAnyValue(activity => activity.ViewModel.ShowError)
                 .Where(x => x) // only show if ShowError is true

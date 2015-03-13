@@ -75,7 +75,7 @@ namespace BetterWeather.Data.ViewModels
             this.RefreshWeather.Subscribe(async result =>
             {
                 this.CityName = result.name;
-                this.Temperature = result.main.temp + "°C";
+					this.Temperature = result.main.temp + "°C";
                 this.Humidity = result.main.humidity + "%";
                 
                 // Download Weather Icon
@@ -91,9 +91,6 @@ namespace BetterWeather.Data.ViewModels
                 this.Log().ErrorException("RefreshWeather", ex);
                 this.ShowError = true;
             });
-
-            this.WhenAnyValue(x => x.WeatherIcon)
-                .Subscribe(x => this.Log().Debug("WEATHERICON CHANGED!!!"));
         }
 
         #endregion
